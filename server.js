@@ -14,16 +14,16 @@ let nextId = 1;
 
 const router = new Router();
 
-router.get('/notes', async (ctx, next) => {
+router.get('/notes', async (ctx) => {
   ctx.response.body = notes;
 });
 
-router.post('/notes', async (ctx, next) => {
+router.post('/notes', async (ctx) => {
   notes.push({ ...ctx.request.body, id: nextId++ });
   ctx.response.status = 204;
 });
 
-router.delete('/notes/:id', async (ctx, next) => {
+router.delete('/notes/:id', async (ctx) => {
   const noteId = Number(ctx.params.id);
   const index = notes.findIndex((o) => o.id === noteId);
   if (index !== -1) {
@@ -36,4 +36,4 @@ app.use(router.routes()).use(router.allowedMethods());
 
 const port = process.env.PORT || 7777;
 const server = http.createServer(app.callback());
-server.listen(port, () => console.log('server started'));
+server.listen(port);
